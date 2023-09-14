@@ -1,41 +1,47 @@
-import logo from './platzi.webp';
-import './App.css';
+import logo from "./platzi.webp";
+import { TodoCounter } from "./TodoCounter";
+import { TodoSearch } from "./TodoSearch";
+import { TodoList } from "./TodoList";
+import { TodoItem } from "./TodoItem";
+import { CreateTodoButton } from "./CreateTodoButton";
+
+import React from "react";
+
+import "./App.css";
+
+const defaultTodos = [
+  { text: "Hacer la compra", completed: false },
+  { text: "Escribir informe de proyecto", completed: true },
+  { text: "Hacer ejercicio", completed: false },
+  { text: "Estudiar programación", completed: false },
+  { text: "Llamar al médico", completed: true },
+  { text: "Limpiar la casa", completed: false },
+  { text: "Preparar la cena", completed: false },
+  { text: "Leer un libro", completed: false },
+  { text: "Planificar vacaciones", completed: false },
+  { text: "Revisar el correo electrónico", completed: true },
+  { text: "Ir al gimnasio", completed: false },
+  { text: "Terminar proyecto de diseño", completed: true },
+];
 
 function App() {
   return (
-    <div className="App">
+    <React.Fragment>
+      <TodoCounter completed={4} total={46} />
+      <TodoSearch />
 
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
-      
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edita el archivo <code>src/App.js</code> y guarda para recargar.
-        </p>
-        <a
-          className="App-link"
-          href="https://platzi.com/reactjs"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+      <TodoList>
+        {defaultTodos.map((todo) => (
+          <TodoItem
+            key={todo.text}
+            text={todo.text}
+            completed={todo.completed}
+          />
+        ))}
+      </TodoList>
 
-
-function TodoItem () {
-  return (
-    <li>
-      <span>V</span>
-      <p>nombre de la taresa</p>
-      <span>X</span>
-    </li>
+      <CreateTodoButton />
+    </React.Fragment>
   );
 }
 
