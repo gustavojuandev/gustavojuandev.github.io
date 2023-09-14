@@ -10,4 +10,4 @@ function TodoItem({text,completed}) {
     );
   }
 
-  export { TodoItem};
+  export { TodoItem };
