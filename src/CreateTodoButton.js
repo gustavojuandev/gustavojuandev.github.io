@@ -1,4 +1,5 @@
 import "./CreateTodoButton.css";
+import {MdAdd} from 'react-icons/md';
 
 function CreateTodoButton() {
   return (
@@ -9,7 +10,7 @@ function CreateTodoButton() {
         console.log(event.target);
       }}
     >
-      <span>+</span>
+      <MdAdd/>
     </button>
   );
 }

@@ -24,8 +24,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 48px;
-    width: 48px;
+    height: 35px;
+    width: 35px;
     font-size: 24px;
     font-weight: bold;
     /* background-color: #CCC; */
@@ -41,8 +41,7 @@
   
   .Icon-delete {
     position: absolute;
-    top: -24px;
-    right: 0;
+    right: 12px;
   }
   .Icon-delete:hover {
     color: red;
