@@ -24,19 +24,35 @@ import React from "react";
 // localStorage.setItem('TODOS_V1', JSON.stringify(defaultTodos));
 // //localStorage.removeItem('TODOS_V1');
 
-function App() {
+/* Custom Hook */
+function useLocalStorage(itemName, initialValue) {
+  const localStorageItem = localStorage.getItem(itemName);
 
-  const localStorageTodos = localStorage.getItem('TODOS_V1');
-  let parsedTodos;
+  let parsedItem;
+  
+  if (!localStorageItem) {
+    localStorage.setItem(itemName, JSON.stringify(initialValue));
+    parsedItem = initialValue;
+  } else {
+    parsedItem = JSON.parse(localStorageItem);
+  }
 
-  if(!localStorageTodos) {
-    localStorage.setItem('TODOS_V1', JSON.stringify([]));
-    parsedTodos = [];
-  }else {
-    parsedTodos = JSON.parse(localStorageTodos);
-  }  
+  const [item, setItem] = React.useState(parsedItem);
 
-  const [todos, setTodos] = React.useState(parsedTodos);
+  const saveItem = (newItem) => {
+    localStorage.setItem(itemName, JSON.stringify(newItem));
+    setItem(newItem);
+  };
+
+  return [item, saveItem];
+}
+
+
+
+
+function App() {  
+  
+  const [todos, saveTodos] =useLocalStorage('TODOS_V1',[]);
   const [searchValue, setSearchValue] = React.useState("");
 
   const completedTodos = todos.filter((todo) => !!todo.completed).length;
@@ -48,13 +64,6 @@ function App() {
     return todoText.includes(searchText);
   });
 
-
-  const saveTodos = (newTodos) =>  {
-    setTodos(newTodos);
-    localStorage.setItem('TODOS_V1', JSON.stringify(newTodos));
-  };
-
-  /* Cambios en los TODOS*/
 
   const completeTodo = (text) => {
     const newTodos = [...todos];
@@ -70,7 +79,6 @@ function App() {
     saveTodos(newTodos);
   };
 
-  /* FIN Cambios en los TODOS */
 
   return (
     <React.Fragment>
@@ -83,8 +91,8 @@ function App() {
             key={todo.text}
             text={todo.text}
             completed={todo.completed}
-            onComplete={()=>completeTodo(todo.text)}
-            onDelete={()=>deleteTodo(todo.text)}
+            onComplete={() => completeTodo(todo.text)}
+            onDelete={() => deleteTodo(todo.text)}
           />
         ))}
       </TodoList>
