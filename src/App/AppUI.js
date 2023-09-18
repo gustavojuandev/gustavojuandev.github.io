@@ -9,7 +9,6 @@ import { TodosError } from "../TodosError";
 import { EmptyTodos } from "../EmptyTodos";
 import { CreateTodoButton } from "../CreateTodoButton";
 
-
 function AppUI({
   loading,
   error,
@@ -27,14 +26,19 @@ function AppUI({
       <TodoSearch searchValue={searchValue} setSearchValue={setSearchValue} />
 
       <TodoList>
-        {loading && <TodosLoading />}
+        {loading && (
+          <>
+            <TodosLoading />
+            <TodosLoading />
+            <TodosLoading />
+          </>
+        )}
+
         {error && <TodosError />}
         {!loading && searchedTodos.length === 0 && <EmptyTodos />}
 
-        
-
         {searchedTodos.map((todo) => (
-          <TodoItem          
+          <TodoItem
             key={todo.text}
             text={todo.text}
             completed={todo.completed}
